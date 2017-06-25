@@ -1,0 +1,180 @@
+{% extends 'layout.html' %}
+
+{% block body %}  	    
+    <div class="container">
+        <div class="jumbotron">
+            <h1><center>Daily Metrics</center></h1> 
+        </div>
+        <!--   <p>This is some text.</p> 
+        <p>This is another text.</p>  -->
+    </div>
+
+<!--     <div class="row col-md-4">
+    <a class="btn btn-success "href="/view_chartData">View Charts</a>
+    </div> -->
+
+<!-- https://www.youtube.com/watch?v=B4Vmm3yZPgc -->
+ <!-- CHART GRAPHS -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie-edge">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <title>My Chart.js Chart</title>
+</head>
+
+<div class='row'>
+    <div>
+        <canvas id="metricsChart" width="350" height="150"></canvas>
+    </div>
+</div>
+
+<div class='row'>
+   <div class='col-xs-10'>
+        <canvas id="avgChart" width="450" height="400"></canvas>
+    </div>
+</div>
+
+<!-- <canvas id="metricsChart" width="400" height="400"></canvas>
+<canvas id="avgChart" width="400" height="400"></canvas> -->
+
+<!-- Create chart and properties -->
+<script>
+  // Get chart ID in element
+  var metricsCanvas = document.getElementById("metricsChart");
+  var avgCanvas = document.getElementById("avgChart");
+
+  // Setting default global values
+  Chart.defaults.global.defaultFontFamily = 'Lato';
+  Chart.defaults.global.defaultFontSize = 18;
+
+  var acdCalls = {
+    label:'ACD Calls',
+    data:[46,43,13,8,4,72,49,57,52,50,0,57],
+    backgroundColor:'rgba(255,99,132,0.6)'
+    };
+  var avgACD = {
+    label:'Avg ACD Time',
+    data:[34,58,8,19,58,44,53,67,54,36,0,42],
+    backgroundColor:'rgba(75,192,192,0.6)'
+    };
+  var occACW = {
+    label:'% Agent Occupancy w/ ACW',
+    data:[40,78,8,100,58,63,69,75,83,93,0,55],
+    backgroundColor: 'rgba(54,162,235,0.6)'
+  };
+  var totals = {
+    label:'Totals',
+    data:[46,125,30,18,57,48,74,75,89,35,67,66],
+    backgroundColor: 'rgba(157,15,20,0.6)',
+
+    label:'% occACW',
+    data:[42,19,35,15,54,42,88,35,36,25,57,60],
+    backgroundColor: 'rgba(17,215,280,0.6)',
+  };
+
+  // Averages
+  var avgACDTime = {
+    label:'Avg ACD Time',
+    data:[0511,0400,0408,0302,0233,0343,0333,0331,0146,0351,0639,0324],
+    backgroundColor:'rgba(255,99,132,0.6)'
+  };
+  var avgACWTime = {
+    label:'Avg ACW Time',
+    data:[0118,0104,0000,058,0047,0050,0317,0229,0000,0252,0000,0221],
+    backgroundColor:'rgba(75,192,192,0.6)'
+  };
+  var avgExtOutTime = {
+    label:'Avg Extn Out Time',
+    data:[0328,0047,0000,0134,0136,0053,0011,0055,0115,0046,0000,0322],
+    backgroundColor: 'rgba(54,162,235,0.6)'
+  };
+
+
+  // Analysts Metrics
+  var analysts = {
+    labels:['Tech1','Tech2','Tech3','Tech4','Tech5', 'Tech6','Tech7','Tech8',
+            'Tech9','Tech10','Tech11','Tech12'],
+    datasets:[acdCalls,avgACD,occACW,totals]    
+  };
+
+  // Averages
+  var averages ={
+    labels:['Tech1','Tech2','Tech3','Tech4','Tech5', 'Tech6','Tech7','Tech8',
+            'Tech9','Tech10','Tech11','Tech12'],
+    datasets:[avgACDTime,avgACWTime,avgExtOutTime] 
+  };
+
+
+  // Chart Options
+  var chartOptions = {
+    title:{
+      display:true,
+      text:'Metrics',
+      fontSize:20,
+      position:'top'
+      },
+    legend:{
+      display:true,
+      position:'right',
+      labels:{fontColor:'#000'}
+      },
+    // layout:{
+    //   padding:{
+    //     left:50,
+    //     right:0,
+    //     bottom:0,
+    //     top:0
+    //   }
+    // }
+  };
+
+  var chartOptionsAvg = {
+    title:{
+      display:true,
+      text:'Averages',
+      fontSize:20,
+      position:'left'
+      },
+    legend:{
+      display:true,
+      position:'right',
+      labels:{fontColor:'#000'}
+      },
+    // layout:{
+    //   padding:{
+    //     left:50,
+    //     right:0,
+    //     bottom:0,
+    //     top:0
+    //   }
+    // }
+  };
+
+
+
+  // Creating Chart(s) with mapped variables
+  var lineChart = new Chart(metricsCanvas,{
+    type:'line',
+    data: analysts,
+    options: chartOptions
+  });
+
+  var pieChart = new Chart(avgCanvas,{
+    type:'radar',
+    data: averages,
+    options: chartOptionsAvg
+  });
+
+
+</script>
+</html>
+
+<!-- <div class="row col-md-4">
+  <a class="btn btn-success "href="#">Previous</a>
+</div> -->
+
+
+{% endblock %}
